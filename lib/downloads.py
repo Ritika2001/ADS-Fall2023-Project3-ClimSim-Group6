@@ -91,27 +91,23 @@ def download_train_data(url):
             print(f"File downloaded and saved to {file_name}")
 
 def fetch_train_data():
-    try:
-        data_base_url = "https://huggingface.co/datasets/LEAP/ClimSim_low-res/tree/main/train"
+    x1 = [f'{i:04d}-{j:02d}' for i in range(1, 10) for j in range(1,13)]
+    x21 = '/E3SM-MMF.mli.'
+    x22 = '/E3SM-MMF.mlo.'
+    x3 = [f'-{i:02d}-{j:05}.nc' for i in range(1, 31) for j in range(0,85200, 1200)]
 
-        response = requests.get(data_base_url)
+    data_base_url = "https://huggingface.co/datasets/LEAP/ClimSim_low-res/resolve/main/train/"
 
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
-            folder_links = soup.find_all('a', class_="col-span-8 flex items-center hover:underline md:col-span-4 lg:col-span-3")
+    for folder in x1[1:]:
+        for day in x3:
+            full_mli_url = data_base_url + folder + x21 + folder + day
+            full_mlo_url = data_base_url + folder + x22 + folder + day
 
-            for link in folder_links:
-                href = link.get('href')
-                if href.startswith('/datasets/LEAP/ClimSim_low-res/tree/main/train/') and re.match(r'/datasets/LEAP/ClimSim_low-res/tree/main/train/\d{4}-\d{2}', href):
-                    subfolder_url = urljoin(data_base_url, href)
-                    response_sub = requests.get(subfolder_url)
-                    if response_sub.status_code == 200:
-                            soup_sub = BeautifulSoup(response_sub.text, 'html.parser')
-                            file_links = soup_sub.find_all('a', {'title' : 'Download file'})
-                            for file_link in file_links:
-                                href_sub = file_link.get('href')
-                                if re.match(r'/datasets/LEAP/ClimSim_low-res/resolve/main/train/(\d{4}-\d{2}/[^\s]+)', href_sub):
-                                    subfile_url = urljoin(subfolder_url, href_sub)
-                                    download_train_data(subfile_url)
-    except:
-        print("")
+            response_mli = requests.get(full_mli_url)
+            response_mlo = requests.get(full_mlo_url)
+            
+            if response_mli.status_code == 200:
+                download_train_data(full_mli_url)
+            if response_mlo.status_code == 200:
+                download_train_data(full_mlo_url)
+        
