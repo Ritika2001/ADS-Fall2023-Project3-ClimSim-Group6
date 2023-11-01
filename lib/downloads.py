@@ -107,11 +107,11 @@ def fetch_train_data():
                     response_sub = requests.get(subfolder_url)
                     if response_sub.status_code == 200:
                             soup_sub = BeautifulSoup(response_sub.text, 'html.parser')
-                            file_links = soup_sub.find_all('a', class_="group flex items-center truncate")
+                            file_links = soup_sub.find_all('a', {'title' : 'Download file'})
                             for file_link in file_links:
                                 href_sub = file_link.get('href')
-                                if re.match(r'/datasets/LEAP/ClimSim_low-res/blob/main/train/(\d{4}-\d{2}/[^\s]+)', href_sub):
+                                if re.match(r'/datasets/LEAP/ClimSim_low-res/resolve/main/train/(\d{4}-\d{2}/[^\s]+)', href_sub):
                                     subfile_url = urljoin(subfolder_url, href_sub)
                                     download_train_data(subfile_url)
     except:
-        continue
+        print("")
