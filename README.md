@@ -16,7 +16,7 @@ Term: Fall 2023
 	+ Feiyu Guo (fg2545)
   	+ Lia Cho (lc3683)
 
-+ Project summary: In this project, we attempted to replicate the quickstart notebook from the ClimSim to a Google Colab notebook for a simpler access to the ClimSim data, but due to file issues were not able to succeed. Using a data loader, we utilized the Huggingface Hub to assist in reading the data files and loading it onto the Colab notebook. We also added visualizations extending what is within the ClimSim files to provide users more visual representations of the ClimSim data. 
++ Project summary: In this project, we attempted to replicate the quickstart notebook from the ClimSim to a Google Colab notebook for a simpler access to the ClimSim data, but due to file issues were not able to succeed. Using a data loader, we utilized the Huggingface Hub to assist in reading the data files and loading it onto the Colab notebook. Note that we created two different functions (download_nc_file and one under climsim_geo_temporal_data_finder_function_definition) to retrieve data from hugging face, and user can implement any of them to retrieve data. We also added visualizations extending what is within the ClimSim files to provide users more visual representations of the ClimSim data. 
 	
 
 **Contribution statement**: All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
